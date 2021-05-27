@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
-import { CardGrid, RepoPanel } from './components';
+import React, { useEffect, useState } from 'react';
+import { CardGrid, /*RepoPanel,*/ RepoCardProps } from './components';
+import { fetchTopStarredRepos } from './services/github-service';
 import './app.scss';
 
 const App: React.FC = () => {
-  // Fetch data
-  const [selectedRepo, setSelectedRepo] = useState<string | undefined>();
+  const [repoData, setRepoData] = useState<RepoCardProps[]>([]);
+  // const [selectedRepo, setSelectedRepo] = useState<string | undefined>();
+
+  useEffect(() => {
+    fetchTopStarredRepos().then((data: RepoCardProps[]) => {
+      console.log(data);
+      setRepoData(data);
+    });
+  }, []);
 
   return (
     <div className="App">
@@ -13,9 +21,10 @@ const App: React.FC = () => {
       </header>
 
       <main>
-        <CardGrid repoData={[]} />
+        {/* TODO: Show loading state when repo data is being fetched */}
+        <CardGrid repoData={repoData} />
 
-        <RepoPanel repo={selectedRepo} />
+        {/* <RepoPanel repo={selectedRepo} /> */}
       </main>
     </div>
   );

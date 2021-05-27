@@ -9,7 +9,7 @@ interface CardGridProps {
 const CardGrid: React.FC<CardGridProps> = ({ repoData }) => {
   return (
     <div>
-      {repoData.map(d => <RepoCard {...d} />)}
+      {repoData.map(d => <RepoCard key={d.name} {...d} />)}
     </div>
   )
 };

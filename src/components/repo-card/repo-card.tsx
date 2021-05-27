@@ -2,20 +2,20 @@ import React from 'react';
 
 export interface RepoCardProps {
   // TODO: May need to add user/org as a prop
-  repoName: string;
-  repoUrl: string;
+  name: string;
+  url: string;
   stars: number;
 }
 
 const RepoCard: React.FC<RepoCardProps> = ({
-  repoName,
-  repoUrl,
+  name,
+  url,
   stars
 }) => {
   return (
     <div>
-      {repoName}
-      {repoUrl}
+      {name}
+      {url}
       {stars}
     </div>
   )
