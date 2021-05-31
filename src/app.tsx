@@ -1,30 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { CardGrid, /*RepoPanel,*/ RepoCardProps } from './components';
+import { CardGrid, CommitPanel, RepoProps } from './components';
 import { fetchTopStarredRepos } from './services/github-service';
-import './app.scss';
+import styles from './app.module.scss';
+
 
 const App: React.FC = () => {
-  const [repoData, setRepoData] = useState<RepoCardProps[]>([]);
-  // const [selectedRepo, setSelectedRepo] = useState<string | undefined>();
+  const [repoData, setRepoData] = useState<RepoProps[]>([]);
+  const [selectedRepo, setSelectedRepo] = useState<RepoProps | undefined>();
 
   useEffect(() => {
-    fetchTopStarredRepos().then((data: RepoCardProps[]) => {
-      console.log(data);
+    const fetchRepoData = async () => {
+      const data = await fetchTopStarredRepos();
       setRepoData(data);
-    });
+      setSelectedRepo(data[0]);
+    }
+
+    fetchRepoData();
   }, []);
 
   return (
-    <div className="App">
-      <header>
+    <div className={styles.app} data-testid='app'>
+      <header className={styles.app__header} data-testid='header'>
         <h1>⭐️ Top Github Repositories</h1>
       </header>
 
-      <main>
-        {/* TODO: Show loading state when repo data is being fetched */}
-        <CardGrid repoData={repoData} />
+      <main className={styles.app__main}>
+        {repoData.length ?
+          <>
+            <CardGrid
+              repoData={repoData}
+              selectedRepo={selectedRepo}
+              onSelect={(r) => setSelectedRepo(r)}
+            />
 
-        {/* <RepoPanel repo={selectedRepo} /> */}
+            <CommitPanel repo={selectedRepo?.name} owner={selectedRepo?.owner} />
+          </>
+          :
+          <div className={styles.app__loading}>Loading...</div>
+        }
+
       </main>
     </div>
   );

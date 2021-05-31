@@ -1,0 +1,16 @@
+.panel {
+  background: #ededed;
+  border-left: 1px solid gray;
+  width: 300px;
+  max-height: 100vh;
+  overflow-y: scroll;
+  padding: 1rem;
+  text-align: left;
+}
+
+.commit {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid gray;
+  overflow-wrap: break-word;
+}

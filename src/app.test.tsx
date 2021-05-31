@@ -1,9 +1,15 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import repos from './mocks/data/repositories';
 import App from './app';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('Renders a loading message and then data', async () => {
+  await waitFor(async () => {
+    render(<App />);
+    expect(await screen.findByText('Loading...')).toBeInTheDocument();
+  });
+
+  repos.forEach(async (r) => {
+    expect(await screen.findByTestId(r.name)).toBeInTheDocument();
+  });
 });

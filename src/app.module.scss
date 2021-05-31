@@ -1,0 +1,17 @@
+.app {
+  &__header {
+    text-align: left;
+    background: darkslategray;
+    color: white;
+    padding: .5rem 2rem;
+  }
+
+  &__main {
+    display: flex;
+  }
+
+  &__loading {
+    padding: 2rem;
+  }
+}
+
